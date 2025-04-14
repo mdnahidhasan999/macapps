@@ -27,8 +27,43 @@ class HomeActivity extends StatelessWidget {
     );
   }
 
+  myAlertDialog(context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Expanded(
+          child: AlertDialog(
+            title: Text('Do you want to delete this item?'),
+            content: Text('This action cannot be undone.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  mySnackBar("Deleted", context);
+                  Navigator.of(context).pop();
+                },
+                child: Text("Yes"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("No"),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: Colors.amber,
+      foregroundColor: Colors.black,
+      padding: EdgeInsets.all(20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter AppBar'),
@@ -69,8 +104,6 @@ class HomeActivity extends StatelessWidget {
         },
         child: Icon(Icons.add),
       ),
-
-      body: const Center(child: Text('Hello, World!')),
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
@@ -189,6 +222,42 @@ class HomeActivity extends StatelessWidget {
           ],
         ),
       ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            myAlertDialog(context);
+          },
+          style: buttonStyle,
+          child: Text('Click Me'),
+        ),
+      ),
+      // SingleChildScrollView(
+      //   scrollDirection: Axis.horizontal,
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //     children: [
+      //       TextButton(
+      //         onPressed: () {
+      //           mySnackBar("TextButton", context);
+      //         },
+      //         child: Text('TextButton'),
+      //       ),
+      //       ElevatedButton(
+      //         onPressed: () {
+      //           mySnackBar("ElevatedButton", context);
+      //         },
+      //         style: buttonStyle,
+      //         child: Text('ElevatedButton'),
+      //       ),
+      //       OutlinedButton(
+      //         onPressed: () {
+      //           mySnackBar("OutlinedButton", context);
+      //         },
+      //         child: Text('OutlinedButton'),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
