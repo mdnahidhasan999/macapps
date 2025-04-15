@@ -23,6 +23,12 @@ class HomeActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      minimumSize: Size(double.infinity, 60),
+      backgroundColor: Colors.green,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    );
+
     return Scaffold(
       appBar: AppBar(title: Text('My App')),
       body: Column(
@@ -69,9 +75,12 @@ class HomeActivity extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(20),
-            child: ElevatedButton(onPressed: (){}, child: Text('Submit')),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text('Submit'),
+              style: buttonStyle,
+            ),
           ),
-          
         ],
       ),
     );
