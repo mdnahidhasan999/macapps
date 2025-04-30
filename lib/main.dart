@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'Tab-bar.dart';
 
-import 'gesture-detector.dart';
+//import 'gesture-detector.dart';
 
 main() {
   runApp(const MyApp());
