@@ -14,7 +14,11 @@ class HomeActivity extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Activity1()),
+                MaterialPageRoute(
+                  builder:
+                      (context) =>
+                          Activity1(message: 'This is from Home to Activity 1'),
+                ),
               );
             },
             child: Text("Activity 1"),
@@ -23,7 +27,11 @@ class HomeActivity extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Activity2()),
+                MaterialPageRoute(
+                  builder:
+                      (context) =>
+                          Activity2(message: 'This is from Home to Activity 2'),
+                ),
               );
             },
             child: Text("Activity 2"),
@@ -35,18 +43,24 @@ class HomeActivity extends StatelessWidget {
 }
 
 class Activity1 extends StatelessWidget {
-  const Activity1({super.key});
+  final String message;
+
+  const Activity1({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Activity 1")),
+      appBar: AppBar(title: Text(message)),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Activity2()),
+              MaterialPageRoute(
+                builder:
+                    (context) =>
+                        Activity2(message: 'This is from Home to Activity 2'),
+              ),
             );
           },
           child: Text("Go Activity 2"),
@@ -57,11 +71,14 @@ class Activity1 extends StatelessWidget {
 }
 
 class Activity2 extends StatelessWidget {
-  const Activity2({super.key});
+  final String message;
+
+  const Activity2({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Activity 2")),
+    return Scaffold(
+      appBar: AppBar(title: Text(message)),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
