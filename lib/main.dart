@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'navigation.dart';
+//import 'navigation.dart';
 //import 'Tab-bar.dart';
+import 'card.dart';
 
 //import 'gesture-detector.dart';
 
