@@ -18,15 +18,12 @@ class HomeActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text('Home')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(flex: 3, child: Container(color: Colors.cyanAccent)),
-          Expanded(child: Container(color: Colors.green)),
-          Expanded(flex: 3, child: Container(color: Colors.red)),
-        ],
+        children: [Text('Screen size= $size')],
       ),
     );
   }
