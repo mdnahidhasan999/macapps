@@ -91,3 +91,16 @@ SuccessToast(msg) {
     fontSize: 16.0,
   );
 }
+
+SliverGridDelegateWithFixedCrossAxisCount ProductGridViewStyle() {
+  return SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,
+    crossAxisSpacing: 10,
+    mainAxisSpacing: 10,
+    childAspectRatio: 0.8,
+    mainAxisExtent: 250,
+
+
+
+  );
+}

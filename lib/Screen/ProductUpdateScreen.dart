@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:macapps/Style/style.dart';
 
 import '../RestAPI/RestClient.dart';
-import '../Style/style.dart';
 import 'ProductGridViewScreen.dart';
 
-class ProductCreateScreen extends StatefulWidget {
-  const ProductCreateScreen({super.key});
+class productUpdateScreen extends StatefulWidget {
+  final Map productItem;
+
+  const productUpdateScreen({super.key, required this.productItem});
 
   @override
-  State<ProductCreateScreen> createState() => _ProductCreateScreen();
+  State<productUpdateScreen> createState() => _productUpdateScreenState();
 }
 
-class _ProductCreateScreen extends State<ProductCreateScreen> {
+class _productUpdateScreenState extends State<productUpdateScreen> {
   Map<String, String> FormValues = {
     "Img": "",
     "ProductCode": "",
@@ -21,6 +23,38 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
     "UnitPrice": "",
   };
   bool Loading = false;
+
+  @override
+  void initState() {
+    setState(() {
+      FormValues.update('Img', (value) => widget.productItem['Img']);
+      FormValues.update(
+        'ProductCode',
+        (value) => widget.productItem['ProductCode'],
+      );
+      FormValues.update(
+        'ProductName',
+        (value) => widget.productItem['ProductName'],
+      );
+      FormValues.update(
+        'Qty',
+        (value) => widget.productItem['Qty'].toString().trim().replaceAll(
+          "pcs",
+          "Pcs",
+        ),
+      );
+
+      FormValues.update(
+        'TotalPrice',
+        (value) => widget.productItem['TotalPrice'],
+      );
+      FormValues.update(
+        'UnitPrice',
+        (value) => widget.productItem['UnitPrice'],
+      );
+      super.initState();
+    });
+  }
 
   void InputOnChang(String Mapkey, String Textvalue) {
     setState(() {
@@ -46,23 +80,19 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
         Loading = true;
       });
 
-      await ProductCreateRequest(FormValues);
+      await ProductUpdateRequest(FormValues, widget.productItem['_id']);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (builder) => ProductGridViewscreen()),
         (route) => false,
       );
-
-      setState(() {
-        Loading = false;
-      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Product')),
+      appBar: AppBar(title: const Text('Update Product')),
       body: Stack(
         children: [
           Container(
@@ -74,6 +104,7 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
                       child: Column(
                         children: [
                           TextFormField(
+                            initialValue: FormValues['ProductName'],
                             decoration: AppInputDecoration("Product Name"),
                             onChanged: (Textvalue) {
                               InputOnChang("ProductName", Textvalue);
@@ -81,6 +112,7 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
                           ),
                           SizedBox(height: 20),
                           TextFormField(
+                            initialValue: FormValues['ProductCode'],
                             decoration: AppInputDecoration("Product Code"),
                             onChanged: (Textvalue) {
                               InputOnChang("ProductCode", Textvalue);
@@ -88,6 +120,7 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
                           ),
                           SizedBox(height: 20),
                           TextFormField(
+                            initialValue: FormValues['Img'],
                             decoration: AppInputDecoration("Product Image"),
                             onChanged: (Textvalue) {
                               InputOnChang("Img", Textvalue);
@@ -95,6 +128,7 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
                           ),
                           SizedBox(height: 20),
                           TextFormField(
+                            initialValue: FormValues['UnitPrice'],
                             decoration: AppInputDecoration(
                               "Product Unit Price",
                             ),
@@ -105,6 +139,7 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
                           SizedBox(height: 20),
 
                           TextFormField(
+                            initialValue: FormValues['TotalPrice'],
                             decoration: AppInputDecoration("Total Price"),
                             onChanged: (Textvalue) {
                               InputOnChang("TotalPrice", Textvalue);
@@ -147,7 +182,7 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
                               onPressed: () {
                                 FormOnSubmit();
                               },
-                              child: SuccessButtonChild('Submit'),
+                              child: SuccessButtonChild('Update'),
                             ),
                           ),
                         ],
@@ -159,9 +194,3 @@ class _ProductCreateScreen extends State<ProductCreateScreen> {
     );
   }
 }
-
-//6crud
-// Image.network(
-// 'https://www.w3schools.com/howto/img_avatar.png',
-// fit: BoxFit.cover,
-// ),
