@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:macapps/style.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyHomePage(), title: 'Flutter CRUD APP');
+    return MaterialApp(home: MyHomePage(), title: 'Sum Calculator');
   }
 }
 
@@ -21,22 +22,82 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  Map<String, String> FormData = {
+    'firstNumber': '',
+    'secondNumber': '',
+    'thirdNumber': '',
+  };
+
+  int sum = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Counter App')),
+    InputOnChange(field, inputValue) {
+      setState(() {
+        FormData.update(field, (value) => inputValue);
+      });
+    }
 
-      body: Center(
-        child: Text(_counter.toString(), style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _counter = _counter + 1;
-          setState(() {});
-        },
-        child: Icon(Icons.add),
+    addAllNumbers() {
+      setState(() {
+        FormData.forEach((key, value) {
+          if (value.isNotEmpty) {
+            sum += int.parse(value);
+          }
+        });
+      });
+
+      return sum;
+    }
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Sum Calculator')),
+      body: Padding(
+        padding: EdgeInsets.all(40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(sum.toString(), style: appTextStyle()),
+            SizedBox(height: 20),
+            TextFormField(
+              onChanged: (value) {
+                InputOnChange('firstNumber', value);
+              },
+
+              decoration: AppInputDecoration(Text('Enter first number')),
+              keyboardType: TextInputType.number,
+            ),
+            SizedBox(height: 20),
+            TextFormField(
+              onChanged: (value) {
+                InputOnChange('secondNumber', value);
+              },
+              decoration: AppInputDecoration(Text('Enter second number')),
+              keyboardType: TextInputType.number,
+            ),
+
+            SizedBox(height: 20),
+            TextFormField(
+              onChanged: (value) {
+                InputOnChange('thirdNumber', value);
+              },
+              decoration: AppInputDecoration(Text('Enter third number')),
+              keyboardType: TextInputType.number,
+            ),
+
+            SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: appButtonStyle(),
+                onPressed: () {
+                  addAllNumbers();
+                },
+                child: Text('Calculate Sum'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
