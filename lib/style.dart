@@ -20,6 +20,14 @@ TextStyle head2Text(textColor) {
   return TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.w400);
 }
 
+TextStyle head6Text(textColor) {
+  return TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.w400);
+}
+
+TextStyle head7Text(textColor) {
+  return TextStyle(color: textColor, fontSize: 13, fontWeight: FontWeight.w400);
+}
+
 InputDecoration appInputDecoration(label) {
   return InputDecoration(
     focusedBorder: OutlineInputBorder(
@@ -92,7 +100,7 @@ void errorToast(msg) {
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
     toastLength: Toast.LENGTH_SHORT,
-    backgroundColor: colorGreen,
+    backgroundColor: colorRed,
     textColor: colorWhite,
     fontSize: 16.0,
   );

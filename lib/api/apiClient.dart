@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../style.dart';
+import '../utility/utility.dart';
 
 var baseUrl = "https://task.teamrabbil.com/api/v1";
-var requestHeader = {"Content-Type": "application/jason"};
+var requestHeader = {"Content-Type": "application/json; charset=utf-8"};
 
 Future<bool> loginRequest(formValues) async {
   var url = Uri.parse("$baseUrl/login");
@@ -14,6 +15,7 @@ Future<bool> loginRequest(formValues) async {
   var resultBody = json.decode(response.body);
   if (resultCode == 200 && resultBody['status'] == 'success') {
     successToast("LogIn  Success");
+    await StoreUserData(resultBody);
     return true;
   } else {
     errorToast("LogIn Failed! try again");
