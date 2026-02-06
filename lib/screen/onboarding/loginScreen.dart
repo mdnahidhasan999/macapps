@@ -31,6 +31,12 @@ class _logInScreenState extends State<logInScreen> {
       });
       var result = await logInRequest(formValues);
       if (result == true) {
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/newTaskList',
+          (route) => false,
+        );
       } else {
         setState(() {
           isLoginLoading = false;
@@ -99,4 +105,5 @@ class _logInScreenState extends State<logInScreen> {
     );
   }
 }
+
 //14

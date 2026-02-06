@@ -10,6 +10,9 @@ class newTaskListScreen extends StatefulWidget {
 class _newTaskListScreenState extends State<newTaskListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: Text("New Task List"), centerTitle: true),
+      body: Center(child: Text("New Task List")),
+    );
   }
 }
