@@ -6,19 +6,28 @@ import 'package:macapps/screen/onboarding/registrationScreen.dart';
 import 'package:macapps/screen/onboarding/setPasswordScreen.dart';
 import 'package:macapps/screen/onboarding/splashScreen.dart';
 import 'package:macapps/screen/task/newTaskListScreen.dart';
+import 'package:macapps/utility/utility.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String? token = await readUserData('token');
+  if (token == null) {
+    runApp(MyApp('/login'));
+  } else {
+    runApp(MyApp('/newTaskList'));
+  }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String firstRoute;
+
+  const MyApp(this.firstRoute, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Task Manager",
-      initialRoute: '/login',
+      initialRoute: firstRoute,
       routes: {
         '/': (context) => const splashScreen(),
         '/login': (context) => logInScreen(),
@@ -32,4 +41,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//15-7
+//16-21
