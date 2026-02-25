@@ -4,7 +4,7 @@ import '../../api/apiClient.dart';
 import '../../style.dart';
 
 class emailVerificationScreen extends StatefulWidget {
-  const emailVerificationScreen({super.key});
+  const emailVerificationScreen({Key? key}) : super(key: key);
 
   @override
   State<emailVerificationScreen> createState() =>
@@ -12,32 +12,28 @@ class emailVerificationScreen extends StatefulWidget {
 }
 
 class _emailVerificationScreenState extends State<emailVerificationScreen> {
-  Map<String, String> formValues = {"email": ""};
-  bool isLoginLoading = false;
+  Map<String, String> FormValues = {"email": ""};
+  bool Loading = false;
 
-  inputOnChange(MapKey, TextValue) {
+  InputOnChange(MapKey, Textvalue) {
     setState(() {
-      formValues.update(MapKey, (value) => TextValue);
+      FormValues.update(MapKey, (value) => Textvalue);
     });
   }
 
-  formOnSubmit() async {
-    if (formValues['email']!.isEmpty) {
-      errorToast("Please Enter Email Address");
+  FormOnSubmit() async {
+    if (FormValues['email']!.isEmpty) {
+      errorToast('Email Required !');
     } else {
       setState(() {
-        isLoginLoading = true;
+        Loading = true;
       });
-      var result = await verifyEmailRequest(formValues['email']);
-      if (result == true) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/pinVerification',
-          (route) => false,
-        );
+      bool res = await verifyEmailRequest(FormValues['email']);
+      if (res == true) {
+        Navigator.pushNamed(context, "/pinVerification");
       } else {
         setState(() {
-          isLoginLoading = false;
+          Loading = false;
         });
       }
     }
@@ -52,7 +48,7 @@ class _emailVerificationScreenState extends State<emailVerificationScreen> {
           Container(
             alignment: Alignment.center,
             child:
-                isLoginLoading
+                Loading
                     ? (Center(child: CircularProgressIndicator()))
                     : (SingleChildScrollView(
                       padding: EdgeInsets.all(30),
@@ -66,19 +62,25 @@ class _emailVerificationScreenState extends State<emailVerificationScreen> {
                           ),
                           SizedBox(height: 1),
                           Text(
-                            "A 6 digit verification code will be sent to your email address",
+                            "A 6 digit verification pin will send to your email address",
                             style: head6Text(colorLightGray),
                           ),
                           SizedBox(height: 20),
                           TextFormField(
+                            onChanged: (Textvalue) {
+                              InputOnChange("email", Textvalue);
+                            },
                             decoration: appInputDecoration("Email Address"),
                           ),
                           SizedBox(height: 20),
-
-                          ElevatedButton(
-                            style: appButtonStyle(),
-                            child: successButtonChild('Next'),
-                            onPressed: () {},
+                          Container(
+                            child: ElevatedButton(
+                              style: appButtonStyle(),
+                              child: successButtonChild('Next'),
+                              onPressed: () {
+                                FormOnSubmit();
+                              },
+                            ),
                           ),
                         ],
                       ),
