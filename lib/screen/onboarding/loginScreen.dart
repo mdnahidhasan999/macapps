@@ -33,7 +33,7 @@ class _logInScreenState extends State<logInScreen> {
       if (result == true) {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          '/newTaskList',
+          '/',
           (route) => false,
         );
       } else {
