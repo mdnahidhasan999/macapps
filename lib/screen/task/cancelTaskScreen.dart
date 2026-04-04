@@ -10,6 +10,8 @@ class cancelTaskListScreen extends StatefulWidget {
 class _cancelTaskListScreenState extends State<cancelTaskListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Center(
+      child: Text("Cancel Task List"),
+    );
   }
 }

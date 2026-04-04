@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:macapps/screen/task/progressTaskListScreen.dart';
 
 import '../../component/appBottomNav.dart';
+import 'cancelTaskScreen.dart';
+import 'completedTaskLisltScreen.dart';
+import 'newTaskListScreen.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -18,11 +22,18 @@ class _HomescreenState extends State<Homescreen> {
     });
   }
 
+  final widgetOptions = [
+    newTaskListScreen(),
+    progressTaskListScreen(),
+    completedTaskListScreen(),
+    cancelTaskListScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Task Manager"), centerTitle: true),
-      body: Center(),
+      body: widgetOptions.elementAt(currentIndex),
       bottomNavigationBar: appBottomNav(currentIndex, onItemTapped),
     );
   }
