@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:macapps/component/taskAppBar.dart';
 import 'package:macapps/screen/task/progressTaskListScreen.dart';
+import 'package:macapps/utility/utility.dart';
 
 import '../../component/appBottomNav.dart';
 import 'cancelTaskScreen.dart';
@@ -15,6 +17,11 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   int currentIndex = 0;
+  Map<String, String> profileData = {
+    'email': '',
+    'firstName': '',
+    'lastName': '',
+  };
 
   onItemTapped(index) {
     setState(() {
@@ -29,10 +36,29 @@ class _HomescreenState extends State<Homescreen> {
     cancelTaskListScreen(),
   ];
 
+  readappBarData() async {
+    String? email = await readUserData('email');
+    String? firstName = await readUserData('firstName');
+    String? lastName = await readUserData('lastName');
+    setState(() {
+      profileData = {
+        'email': '$email',
+        'firstName': '$firstName',
+        'lastName': '$lastName',
+      };
+    });
+  }
+
+  @override
+  void initState() {
+    readappBarData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Task Manager"), centerTitle: true),
+      appBar: taskAppBar(context, profileData),
       body: widgetOptions.elementAt(currentIndex),
       bottomNavigationBar: appBottomNav(currentIndex, onItemTapped),
     );

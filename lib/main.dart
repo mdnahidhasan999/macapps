@@ -5,7 +5,7 @@ import 'package:macapps/screen/onboarding/pinVerificationScreen.dart';
 import 'package:macapps/screen/onboarding/registrationScreen.dart';
 import 'package:macapps/screen/onboarding/setPasswordScreen.dart';
 import 'package:macapps/screen/task/homeScreen.dart';
-import 'package:macapps/screen/task/newTaskListScreen.dart';
+import 'package:macapps/screen/task/taskCreatedScreen.dart';
 import 'package:macapps/utility/utility.dart';
 
 void main() async {
@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/emailVerification': (context) => emailVerificationScreen(),
         '/pinVerification': (context) => pinVerificationScreen(),
         '/setPassword': (context) => setPasswordScreen(),
+        '/createdTask': (context) => createdTaskListScreen(),
       },
     );
   }

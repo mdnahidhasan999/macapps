@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../api/apiClient.dart';
+import '../../component/taskListView.dart';
+
 class completedTaskListScreen extends StatefulWidget {
   const completedTaskListScreen({super.key});
 
@@ -8,10 +11,34 @@ class completedTaskListScreen extends StatefulWidget {
 }
 
 class _completedTaskListScreenState extends State<completedTaskListScreen> {
+
+
+
+  List TaskItems = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    CallData();
+    super.initState();
+  }
+
+  CallData() async {
+    var data = await TaskListRequest("Completed");
+    setState(() {
+      isLoading = false;
+      TaskItems = data;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Completed Task List"),
+    return isLoading
+        ? (Center(child: CircularProgressIndicator()))
+        : RefreshIndicator(
+      onRefresh: () async {
+        await CallData();
+      },
+      child: TaskList(TaskItems),
     );
   }
 }

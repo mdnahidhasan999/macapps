@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../utility/utility.dart';
+import '../../api/apiClient.dart';
+import '../../component/taskListView.dart';
 
 class newTaskListScreen extends StatefulWidget {
   const newTaskListScreen({super.key});
@@ -10,26 +11,32 @@ class newTaskListScreen extends StatefulWidget {
 }
 
 class _newTaskListScreenState extends State<newTaskListScreen> {
-  String email = "";
+  List TaskItems = [];
+  bool isLoading = true;
 
   @override
   void initState() {
-    callUserData();
+    CallData();
     super.initState();
   }
 
-  callUserData() async {
-    var a = await readUserData("email");
+  CallData() async {
+    var data = await TaskListRequest("New");
     setState(() {
-      email = a!;
+      isLoading = false;
+      TaskItems = data;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("New Task List"), centerTitle: true),
-      body: Center(child: Text(email)),
-    );
+    return isLoading
+        ? (Center(child: CircularProgressIndicator()))
+        : RefreshIndicator(
+          onRefresh: () async {
+            await CallData();
+          },
+          child: TaskList(TaskItems),
+        );
   }
 }

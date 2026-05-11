@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../api/apiClient.dart';
+import '../../component/taskListView.dart';
+
 class progressTaskListScreen extends StatefulWidget {
   const progressTaskListScreen({super.key});
 
@@ -8,8 +11,32 @@ class progressTaskListScreen extends StatefulWidget {
 }
 
 class _progressTaskListScreenState extends State<progressTaskListScreen> {
+  List TaskItems = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    CallData();
+    super.initState();
+  }
+
+  CallData() async {
+    var data = await TaskListRequest("Progress");
+    setState(() {
+      isLoading = false;
+      TaskItems = data;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Progress Task List"));
+    return isLoading
+        ? (Center(child: CircularProgressIndicator()))
+        : RefreshIndicator(
+      onRefresh: () async {
+        await CallData();
+      },
+      child: TaskList(TaskItems),
+    );
   }
 }
